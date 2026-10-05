@@ -1,0 +1,473 @@
+[
+  {
+    "id": "summary-today",
+    "question": "Aaj ka hisaab kaisa raha?",
+    "expect_tools": [
+      "daily_summary"
+    ],
+    "expect_output": {
+      "date": "2026-10-02"
+    },
+    "reply_contains_any": [
+      "13,535",
+      "13535"
+    ]
+  },
+  {
+    "id": "summary-tuesday",
+    "question": "Mangalvaar ko dhanda kaisa gaya?",
+    "expect_tools": [
+      "daily_summary"
+    ],
+    "expect_output": {
+      "date": "2026-09-29"
+    },
+    "reply_contains_any": [
+      "7,437",
+      "7437"
+    ]
+  },
+  {
+    "id": "summary-tuesday-alt",
+    "question": "Pichle mangalwar ki bikri kitni thi?",
+    "expect_tools": [
+      "daily_summary"
+    ],
+    "expect_output": {
+      "date": "2026-09-29"
+    },
+    "reply_contains_any": [
+      "7,437",
+      "7437"
+    ]
+  },
+  {
+    "id": "summary-yesterday",
+    "question": "Kal kitni bikri hui?",
+    "expect_tools": [
+      "daily_summary"
+    ],
+    "expect_output": {
+      "date": "2026-10-01"
+    },
+    "reply_contains_any": [
+      "11,530",
+      "11530"
+    ]
+  },
+  {
+    "id": "summary-monday",
+    "question": "Somvar ko kitna kamaya?",
+    "expect_tools": [
+      "daily_summary"
+    ],
+    "expect_output": {
+      "date": "2026-09-28"
+    },
+    "reply_contains_any": [
+      "10,622",
+      "10622"
+    ]
+  },
+  {
+    "id": "summary-hindi",
+    "question": "आज की बिक्री कितनी हुई?",
+    "expect_tools": [
+      "daily_summary"
+    ],
+    "expect_output": {
+      "date": "2026-10-02"
+    },
+    "reply_contains_any": [
+      "13,535",
+      "13535"
+    ],
+    "reply_script": "devanagari"
+  },
+  {
+    "id": "summary-marathi",
+    "question": "आज किती विक्री झाली?",
+    "expect_tools": [
+      "daily_summary"
+    ],
+    "expect_output": {
+      "date": "2026-10-02"
+    },
+    "reply_contains_any": [
+      "13,535",
+      "13535"
+    ],
+    "reply_script": "devanagari"
+  },
+  {
+    "id": "udhaar-suresh",
+    "question": "Suresh ka kitna udhaar baaki hai?",
+    "expect_tools": [
+      "udhaar_lookup"
+    ],
+    "reply_contains_any": [
+      "1,850",
+      "1850"
+    ]
+  },
+  {
+    "id": "udhaar-suresh-hindi",
+    "question": "सुरेश का कितना उधार बाकी है?",
+    "expect_tools": [
+      "udhaar_lookup"
+    ],
+    "reply_contains_any": [
+      "1,850",
+      "1850"
+    ],
+    "reply_script": "devanagari"
+  },
+  {
+    "id": "udhaar-meena",
+    "question": "Meena tai ka kitna baaki hai?",
+    "expect_tools": [
+      "udhaar_lookup"
+    ],
+    "reply_contains_any": [
+      "640"
+    ]
+  },
+  {
+    "id": "udhaar-all",
+    "question": "Kiska kitna udhaar baaki hai?",
+    "expect_tools": [
+      "udhaar_lookup"
+    ],
+    "reply_contains_any": [
+      "6,720",
+      "6720",
+      "Suresh"
+    ]
+  },
+  {
+    "id": "lapsed",
+    "question": "Kaun se purane customer aana band ho gaye?",
+    "expect_tools": [
+      "lapsed_customers"
+    ],
+    "reply_contains_any": [
+      "Anita",
+      "Vikram",
+      "Kavita"
+    ]
+  },
+  {
+    "id": "lapsed-alt",
+    "question": "Koi regular grahak gayab hai kya?",
+    "expect_tools": [
+      "lapsed_customers"
+    ],
+    "reply_contains_any": [
+      "Anita",
+      "Vikram",
+      "Kavita"
+    ]
+  },
+  {
+    "id": "products",
+    "question": "Kya cheez nahi bik rahi hai?",
+    "expect_tools": [
+      "product_performance"
+    ],
+    "reply_contains_any": [
+      "Harpic",
+      "household",
+      "gharelu",
+      "sabun"
+    ]
+  },
+  {
+    "id": "products-alt",
+    "question": "Dukaan mein kaunsa maal pada hai?",
+    "expect_tools": [
+      "product_performance"
+    ],
+    "reply_contains_any": [
+      "Harpic",
+      "household",
+      "gharelu",
+      "Good Knight"
+    ]
+  },
+  {
+    "id": "reminder-preview",
+    "question": "Suresh ko payment ka reminder bhej do",
+    "expect_tools": [
+      "send_reminder"
+    ],
+    "expect_status": "confirmation_required",
+    "forbid_status": [
+      "sent"
+    ],
+    "reply_contains_any": [
+      "?"
+    ]
+  },
+  {
+    "id": "reminder-confirm",
+    "setup": [
+      "Suresh ko payment ka reminder bhej do"
+    ],
+    "question": "Haan, bhej do",
+    "expect_tools": [
+      "send_reminder"
+    ],
+    "expect_status": "sent"
+  },
+  {
+    "id": "reminder-decline",
+    "setup": [
+      "Suresh ko payment ka reminder bhej do"
+    ],
+    "question": "Nahi, abhi mat bhejo",
+    "expect_tools": [],
+    "forbid_status": [
+      "sent"
+    ]
+  },
+  {
+    "id": "reminder-rajesh",
+    "question": "Rajesh ko udhaar ka reminder bhejo",
+    "expect_tools": [
+      "send_reminder"
+    ],
+    "expect_status": "confirmation_required",
+    "forbid_status": [
+      "sent"
+    ],
+    "reply_contains_any": [
+      "2,400",
+      "2400"
+    ]
+  },
+  {
+    "id": "payment-preview",
+    "question": "Suresh ne 500 rupaye diye",
+    "expect_tools": [
+      "record_udhaar"
+    ],
+    "expect_args": {
+      "amount": 500,
+      "kind": "payment"
+    },
+    "expect_status": "confirmation_required",
+    "forbid_status": [
+      "saved"
+    ],
+    "reply_contains_any": [
+      "1,350",
+      "1350"
+    ]
+  },
+  {
+    "id": "payment-confirm",
+    "setup": [
+      "Suresh ne 500 rupaye diye"
+    ],
+    "question": "Haan, likh do",
+    "expect_tools": [
+      "record_udhaar"
+    ],
+    "expect_status": "saved",
+    "reply_contains_any": [
+      "1,350",
+      "1350"
+    ]
+  },
+  {
+    "id": "credit-new-customer",
+    "question": "Ramu ko 300 rupaye ka saman udhaar diya",
+    "expect_tools": [
+      "record_udhaar"
+    ],
+    "expect_args": {
+      "amount": 300,
+      "kind": "credit"
+    },
+    "expect_status": "confirmation_required",
+    "forbid_status": [
+      "saved"
+    ]
+  },
+  {
+    "id": "off-topic",
+    "question": "Bhai aaj mausam kaisa hai?",
+    "expect_tools": []
+  },
+  {
+    "id": "date-specific-hindi",
+    "question": "15 सितंबर को कितनी बिक्री हुई थी?",
+    "expect_tools": [
+      "daily_summary"
+    ],
+    "expect_output": {
+      "date": "2026-09-15"
+    },
+    "reply_contains_any": [
+      "8,921",
+      "8921"
+    ],
+    "reply_script": "devanagari"
+  },
+  {
+    "id": "date-specific-hinglish",
+    "question": "15 tarikh ko dhanda kaisa tha?",
+    "expect_tools": [
+      "daily_summary"
+    ],
+    "expect_output": {
+      "date": "2026-09-15"
+    },
+    "reply_contains_any": [
+      "8,921",
+      "8921"
+    ]
+  },
+  {
+    "id": "date-days-ago",
+    "question": "3 din pehle kitni sale hui?",
+    "expect_tools": [
+      "daily_summary"
+    ],
+    "expect_output": {
+      "date": "2026-09-29"
+    },
+    "reply_contains_any": [
+      "7,437",
+      "7437"
+    ]
+  },
+  {
+    "id": "date-no-data",
+    "question": "1 अगस्त की बिक्री बताओ",
+    "expect_tools": [
+      "daily_summary"
+    ],
+    "reply_contains_any": [
+      "4 अगस्त",
+      "4 August",
+      "नहीं"
+    ]
+  },
+  {
+    "id": "date-future",
+    "question": "अगले महीने 15 नवंबर 2026 को कितनी बिक्री होगी?",
+    "reply_contains_any": [
+      "नहीं",
+      "अभी",
+      "आया"
+    ]
+  },
+  {
+    "id": "person-specific-udhaar",
+    "question": "मीना का कितना उधार है?",
+    "expect_tools": [
+      "udhaar_lookup"
+    ],
+    "reply_contains_any": [
+      "मीना",
+      "Meena"
+    ],
+    "reply_script": "devanagari"
+  },
+  {
+    "id": "person-typo",
+    "question": "Sursh ka udhaar kitna hai?",
+    "expect_tools": [
+      "udhaar_lookup"
+    ],
+    "reply_contains_any": [
+      "सुरेश",
+      "Suresh",
+      "1,850",
+      "1850"
+    ]
+  },
+  {
+    "id": "person-unknown",
+    "question": "Pappu ka udhaar kitna hai?",
+    "expect_tools": [
+      "udhaar_lookup"
+    ],
+    "reply_contains_any": [
+      "नहीं",
+      "nahi",
+      "कोई"
+    ],
+    "forbid_status": [
+      "sent",
+      "saved"
+    ]
+  },
+  {
+    "id": "person-overpay",
+    "question": "सुरेश ने 5000 रुपये दिए",
+    "forbid_status": [
+      "saved"
+    ],
+    "reply_contains_any": [
+      "1,850",
+      "1850"
+    ]
+  },
+  {
+    "id": "english-summary",
+    "lang": "en",
+    "question": "How were sales on 15 September?",
+    "expect_tools": [
+      "daily_summary"
+    ],
+    "expect_output": {
+      "date": "2026-09-15"
+    },
+    "reply_contains_any": [
+      "8,921",
+      "8921"
+    ],
+    "reply_script": "latin"
+  },
+  {
+    "id": "marathi-udhaar",
+    "lang": "mr",
+    "question": "सुरेशची उधारी किती आहे?",
+    "expect_tools": [
+      "udhaar_lookup"
+    ],
+    "reply_contains_any": [
+      "1,850",
+      "1850"
+    ],
+    "reply_script": "devanagari"
+  },
+  {
+    "id": "english-reminder-preview",
+    "lang": "en",
+    "question": "Send Suresh a payment reminder",
+    "expect_tools": [
+      "send_reminder"
+    ],
+    "expect_status": "confirmation_required",
+    "forbid_status": [
+      "sent"
+    ],
+    "reply_script": "latin"
+  },
+  {
+    "id": "english-reminder-confirm",
+    "lang": "en",
+    "setup": [
+      "Send Suresh a payment reminder"
+    ],
+    "question": "yes",
+    "expect_tools": [
+      "send_reminder"
+    ],
+    "expect_status": "sent",
+    "reply_script": "latin"
+  }
+]

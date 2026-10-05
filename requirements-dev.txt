@@ -1,0 +1,5 @@
+-r requirements.txt
+anthropic>=1.0           # only if LLM_PROVIDER=anthropic
+pandas>=2.2              # dataset generator only
+pytest>=8.0
+playwright>=1.40         # functional tests only (uses your installed Chrome)

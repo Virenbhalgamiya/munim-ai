@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="hi" translate="no" class="notranslate">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="google" content="notranslate">
+<title>मुनीम AI</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23002e6e'/%3E%3Ctext x='32' y='45' font-size='38' text-anchor='middle' fill='white' font-family='sans-serif'%3E%E0%A4%AE%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="/static/app.css">
+<script src="/static/app.js" defer></script>
+</head>
+<body class="notranslate">
+
+<div class="banner" id="banner" role="alert" hidden></div>
+
+<!-- ================= login ================= -->
+<main class="login" id="loginView" hidden>
+  <section class="login-hero">
+    <div class="login-top">
+      <div class="brand big"><span class="logo">म</span><span><span data-i18n="brand">मुनीम</span> <span class="ai">AI</span></span></div>
+      <select class="lang-select" id="loginLang" aria-label="Language / भाषा">
+        <option value="hi">हिंदी</option><option value="en">English</option><option value="mr">मराठी</option>
+      </select>
+    </div>
+    <h1><span data-i18n="login.h1a">आपकी दुकान का</span><br><span data-i18n="login.h1b">समझदार मुनीम।</span></h1>
+    <p data-i18n="login.p">बोलकर पूछिए — बिक्री, उधार, कौन-सा ग्राहक नहीं आ रहा। मुनीम खुद बताता है कि आज क्या ज़रूरी है।</p>
+    <ul class="hero-points">
+      <li><span aria-hidden="true">🎙️</span> <span data-i18n="login.pt1">हिंदी, हिंग्लिश और मराठी में बात</span></li>
+      <li><span aria-hidden="true">💡</span> <span data-i18n="login.pt2">रोज़ की ब्रीफ़िंग और रुपये में सुझाव</span></li>
+      <li><span aria-hidden="true">📒</span> <span data-i18n="login.pt3">आवाज़ से उधार खाता और रिमाइंडर</span></li>
+    </ul>
+  </section>
+  <form class="login-card" id="loginForm" autocomplete="on">
+    <h2 data-i18n="login.title">लॉगिन</h2>
+    <p class="muted" id="loginHint" data-i18n="login.hint.otp">अपने रजिस्टर्ड मोबाइल नंबर पर OTP पाइए</p>
+    <label><span data-i18n="login.phone">मोबाइल नंबर</span>
+      <span class="phone-field"><span>+91</span>
+        <input id="phone" name="phone" inputmode="numeric" autocomplete="tel" maxlength="13" data-i18n-ph="login.phone.ph" placeholder="10 अंकों का नंबर" required>
+      </span>
+    </label>
+    <label id="pinRow" hidden>PIN
+      <input id="pin" name="pin" type="password" inputmode="numeric" autocomplete="current-password" maxlength="6" placeholder="••••••">
+    </label>
+    <label id="otpRow" hidden>OTP
+      <input id="otp" class="otp-input" name="otp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="• • • • • •">
+    </label>
+    <button class="btn primary wide" id="loginBtn" type="submit">OTP भेजें</button>
+    <div class="otp-links" id="otpLinks" hidden>
+      <button class="linkbtn" id="resendBtn" type="button" disabled>दोबारा भेजें</button>
+      <button class="linkbtn" id="changeBtn" type="button" data-i18n="login.change">नंबर बदलें</button>
+    </div>
+    <p class="ok-text" id="loginInfo" role="status"></p>
+    <p class="err-text" id="loginErr" role="alert"></p>
+  </form>
+</main>
+
+<!-- ================= app ================= -->
+<div class="shell" id="appView" hidden>
+  <header class="topbar">
+    <div class="brand"><span class="logo">म</span><span><span data-i18n="brand">मुनीम</span> <span class="ai">AI</span></span></div>
+    <div class="store" id="storeName"></div>
+    <div class="top-right">
+      <span class="date" id="todayLabel"></span>
+      <span class="pill dev" id="devPill" hidden data-i18n="top.dev">डेवलपर मोड</span>
+      <span class="pill" id="tgPill"><span class="dot"></span><span id="tgText">Telegram</span></span>
+      <select class="lang-select" id="uiLang" aria-label="Language / भाषा">
+        <option value="hi">हिंदी</option><option value="en">English</option><option value="mr">मराठी</option>
+      </select>
+      <button class="btn ghost small" id="logoutBtn" type="button" data-i18n="top.logout">लॉगआउट</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <main class="dash" id="dash">
+      <section class="hero card" id="hero">
+        <div class="hero-text">
+          <p class="eyebrow" id="heroDate" data-i18n="hero.brief">आज की ब्रीफ़िंग</p>
+          <h1 id="heroTitle">नमस्ते</h1>
+          <p class="briefing" id="briefingText" data-i18n="hero.loading">ब्रीफ़िंग तैयार हो रही है…</p>
+        </div>
+        <button class="btn primary" id="briefingBtn" type="button"><span class="ico" aria-hidden="true">▶</span><span class="lbl" data-i18n="hero.listen">ब्रीफ़िंग सुनें</span></button>
+      </section>
+
+      <section class="card error-card" id="dashError" hidden>
+        <div><h3 data-i18n="err.title">डैशबोर्ड लोड नहीं हुआ</h3><p class="muted" id="dashErrorText"></p></div>
+        <button class="btn" id="dashRetry" type="button" data-i18n="err.retry">फिर से कोशिश करें</button>
+      </section>
+
+      <section class="payments" id="payments" hidden>
+        <div class="section-head"><h2 data-i18n="pay.title">UPI से आया पैसा</h2><span class="muted" data-i18n="pay.sub">क्या यह उधार की वापसी है? आप तय कीजिए।</span></div>
+        <div class="payment-cards" id="paymentCards"></div>
+      </section>
+
+      <section class="kpis" id="kpis"></section>
+
+      <section class="section">
+        <div class="section-head">
+          <h2 data-i18n="insights.title">आज के सुझाव</h2>
+          <div class="sev-legend">
+            <span class="critical" data-i18n="sev.critical">ज़रूरी</span><span class="warning" data-i18n="sev.warning">ध्यान दें</span>
+            <span class="opportunity" data-i18n="sev.opportunity">मौका</span><span class="info" data-i18n="sev.info">जानकारी</span>
+          </div>
+        </div>
+        <div class="insights" id="insights"></div>
+      </section>
+
+      <section class="charts">
+        <article class="card chart-card wide">
+          <div class="chart-head"><div><h3 data-i18n="chart.sales.title">पिछले 28 दिन की बिक्री</h3><p class="muted" id="salesSub"></p></div>
+            <div class="legend"><span><i class="sw-hl"></i><span id="legWeak"></span></span><span><i class="sw-today"></i><span data-i18n="chart.legend.today">आज</span></span><span><i class="sw-bar"></i><span data-i18n="chart.legend.rest">बाकी दिन</span></span></div></div>
+          <div class="chart" id="salesChart"></div>
+        </article>
+        <article class="card chart-card">
+          <div class="chart-head"><div><h3 data-i18n="chart.week.title">हफ़्ते का पैटर्न</h3><p class="muted" data-i18n="chart.week.sub"></p></div></div>
+          <div class="chart" id="weekdayChart"></div>
+        </article>
+        <article class="card chart-card">
+          <div class="chart-head"><div><h3 data-i18n="chart.cat.title">क्या बिक रहा है</h3><p class="muted" data-i18n="chart.cat.sub"></p></div></div>
+          <div id="categoryBars" class="catbars"></div>
+          <div class="slow" id="slowList"></div>
+        </article>
+      </section>
+
+      <section class="card section">
+        <div class="section-head"><h2 data-i18n="khata.title">उधार खाता</h2>
+          <div class="khata-tools"><span class="muted" id="khataSummary"></span>
+            <button class="btn ghost small" id="simToggle" type="button" hidden data-i18n="sim.toggle">🧪 डेमो: UPI पेमेंट आने दें</button></div></div>
+        <form class="sim-form" id="simForm" hidden>
+          <span class="muted" data-i18n="sim.note"></span>
+          <select id="simCustomer" aria-label="Customer"></select>
+          <input id="simAmount" type="number" min="1" max="100000" value="500" aria-label="Amount">
+          <button class="btn primary small" type="submit" data-i18n="sim.send">पेमेंट भेजें</button>
+        </form>
+        <div class="table-wrap"><table class="khata" id="khataTable">
+          <thead><tr><th data-i18n="khata.customer">ग्राहक</th><th class="num" data-i18n="khata.due">बाकी</th><th data-i18n="khata.last">आखिरी भुगतान</th><th><span class="sr-only">⋯</span></th></tr></thead>
+          <tbody></tbody>
+        </table></div>
+      </section>
+    </main>
+
+    <aside class="assistant card" id="assistant">
+      <div class="assistant-head">
+        <div><h2 data-i18n="asst.title">मुनीम से पूछिए</h2><p class="muted" data-i18n="asst.sub">बोलकर या लिखकर</p></div>
+        <div class="head-actions">
+          <button class="btn ghost small" id="historyBtn" type="button" data-i18n="asst.history">🕘 पिछली बातचीत</button>
+          <button class="btn ghost small" id="resetBtn" type="button" data-i18n="asst.new">नई बातचीत</button>
+        </div>
+      </div>
+      <div class="history" id="history" hidden></div>
+      <div class="chat" id="chat" aria-live="polite"></div>
+      <div class="suggest" id="suggest"></div>
+      <div class="composer">
+        <div class="live" id="live"></div>
+        <div class="composer-row">
+          <button class="mic" id="mic" type="button" aria-label="mic"><span class="mic-icon" aria-hidden="true"></span></button>
+          <input type="text" id="text" data-i18n-ph="asst.ph" placeholder="यहाँ लिखिए…" autocomplete="off" maxlength="500">
+          <button class="send" id="send" type="button" aria-label="send">➤</button>
+        </div>
+        <div class="composer-opts">
+          <select id="voice" aria-label="voice">
+            <option value="female" data-i18n="asst.voice_f">आवाज़: महिला</option>
+            <option value="male" data-i18n="asst.voice_m">आवाज़: पुरुष</option>
+          </select>
+          <label class="toggle"><input type="checkbox" id="speak" checked> <span data-i18n="asst.speak">बोलकर सुनाएँ</span></label>
+        </div>
+      </div>
+    </aside>
+  </div>
+</div>
+<div class="tooltip" id="tooltip" hidden></div>
+<div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>
